@@ -49,6 +49,43 @@ app.post("/api/workouts", async ({ body }, res) => {
         });
 })
 
+// PUT route to update exercise
+app.put("/api/workouts/:id", (req, res) => {
+    console.log(req.body)
+
+    if (req.body.type == "cardio") {
+        db.Exercise.updateOne({ _id: req.params.id }, {
+            type: req.body.type,
+            name: req.body.name,
+            duration: req.body.duration,
+            distance: req.body.distance
+        }, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    }
+
+    if (req.body.type == "resistance") {
+        db.Exercise.update({ _id: req.params.id }, {
+            type: req.body.type,
+            name: req.body.name,
+            weight: req.body.weight,
+            reps: req.body.reps,
+            sets: req.body.sets,
+            duration: req.body.duration
+        }, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    }
+})
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
