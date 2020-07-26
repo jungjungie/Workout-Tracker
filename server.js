@@ -16,14 +16,40 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker-db", { useNewUrlParser: true });
 
-// GET route to to exercise page
+// GET route to exercise page
 app.get("/exercise", (req, res) => {
-   res.sendFile(path.join(__dirname, "public/exercise.html"));
+    res.sendFile(path.join(__dirname, "public/exercise.html"));
+})
+
+// POST route to create new workout and exercise
+app.post("/api/workouts", async ({ body }, res) => {
+    // console.log(body);
+
+    // Creates new workout in db for current date
+    await db.Workout.create({ day: Date.now() })
+        .then(dbWorkout => {
+            console.log(dbWorkout);
+        })
+        .catch(({ message }) => {
+            console.log(message);
+        })
+
+    // Creates a new exercise
+    await db.Exercise.create(body)
+        .then(({ _id }) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, {
+            new: true
+        }))
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 })
 
 // Start the server
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
-  });  
+});  
