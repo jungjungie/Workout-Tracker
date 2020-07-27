@@ -16,7 +16,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker-db", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker-db", { useNewUrlParser: true,
+useFindAndModify: false });
 
 // GET route to exercise page
 app.get("/exercise", (req, res) => {
@@ -35,55 +36,6 @@ app.post("/api/workouts", async ({ body }, res) => {
         .catch(({ message }) => {
             console.log(message);
         })
-
-    // Creates a new exercise
-    await db.Exercise.create(body)
-        .then(({ _id }) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, {
-            new: true
-        }))
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-})
-
-// PUT route to update exercise
-app.put("/api/workouts/:id", (req, res) => {
-    console.log(req.body)
-
-    if (req.body.type == "cardio") {
-        db.Exercise.updateOne({ _id: req.params.id }, {
-            type: req.body.type,
-            name: req.body.name,
-            duration: req.body.duration,
-            distance: req.body.distance
-        }, (err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data);
-            }
-        });
-    }
-
-    if (req.body.type == "resistance") {
-        db.Exercise.update({ _id: req.params.id }, {
-            type: req.body.type,
-            name: req.body.name,
-            weight: req.body.weight,
-            reps: req.body.reps,
-            sets: req.body.sets,
-            duration: req.body.duration
-        }, (err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data);
-            }
-        });
-    }
 })
 
 // Start the server
