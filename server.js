@@ -19,23 +19,62 @@ app.use(express.static("public"));
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker-db", { useNewUrlParser: true,
 useFindAndModify: false });
 
+// HTML routes
+// ========================================================
 // GET route to exercise page
 app.get("/exercise", (req, res) => {
     res.sendFile(path.join(__dirname, "public/exercise.html"));
 })
 
-// POST route to create new workout and exercise
-app.post("/api/workouts", async ({ body }, res) => {
-    // console.log(body);
+// app.get("/stats", (req, res) => {
+//     res.sendFile(path.join(__dirname, "public/stats.html"));
+// })
 
-    // Creates new workout in db for current date
-    await db.Workout.create({ day: Date.now() })
+
+
+
+// API routes
+// ========================================================
+// GET route to display last workout
+app.get("/api/workouts", (req, res) => {
+
+    db.Workout.find().populate("exercises")
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+})
+
+// POST route to create new workout
+app.post("/api/workouts", (req, res) => {
+
+    db.Workout.create({ day: Date.now() })
         .then(dbWorkout => {
             console.log(dbWorkout);
+            location.search = "?id=" + workout._id;
         })
         .catch(({ message }) => {
             console.log(message);
         })
+})
+
+// PUT route to update exercise
+app.put("/api/workouts/:id", (req, res) => {
+    console.log("==================================")
+    console.log(req.body)
+    console.log(req.params.id)
+    console.log("==================================")
+
+    db.Exercise.create(req.body)
+        .then(({ _id }) => db.Workout.findOneAndUpdate({ _id: req.params.id }, { $push: { exercises: _id } }, { new: true }))
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
 })
 
 // Start the server
