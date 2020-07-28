@@ -16,8 +16,10 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker-db", { useNewUrlParser: true,
-useFindAndModify: false });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitness-tracker-db", {
+    useNewUrlParser: true,
+    useFindAndModify: false
+});
 
 // HTML routes
 // ========================================================
@@ -26,6 +28,7 @@ app.get("/exercise", (req, res) => {
     res.sendFile(path.join(__dirname, "public/exercise.html"));
 })
 
+// GET route to stats page
 app.get("/stats", (req, res) => {
     res.sendFile(path.join(__dirname, "public/stats.html"));
 })
@@ -37,7 +40,31 @@ app.get("/api/workouts", (req, res) => {
 
     db.Workout.find().populate("exercises")
         .then(dbWorkout => {
-            res.json(dbWorkout);
+            // console.log(dbWorkout)
+            let workoutArr = [];
+
+            // Loops through all exercises in workout and adds up total duration
+            for (let i = 0; i < dbWorkout.length; i++) {
+                let totalDuration = 0;
+
+                for (let j = 0; j < dbWorkout[i].exercises.length; j++) {
+                    totalDuration += dbWorkout[i].exercises[j].duration;
+                }
+
+                // Rebuilds last workout from db as a new object
+                let workoutObj = {
+                    day: dbWorkout[i].day,
+                    exercises: dbWorkout[i].exercises
+                };
+
+                // Adding totalDuration to rebuilt workoutObj
+                workoutObj.totalDuration = totalDuration;
+                workoutArr.push(workoutObj);
+
+                // console.log(totalDuration);
+                // console.log(workoutArr)
+            }
+            res.json(workoutArr);
         })
         .catch(err => {
             res.json(err);
@@ -51,14 +78,13 @@ app.post("/api/workouts", (req, res) => {
         .then(dbWorkout => {
             console.log(dbWorkout);
             res.json(dbWorkout);
-            // location.search = "?id=" + workout._id;
         })
         .catch(({ message }) => {
             console.log(message);
         })
 })
 
-// PUT route to update exercise
+// PUT route to update workout with a newly created exercise
 app.put("/api/workouts/:id", (req, res) => {
     console.log("==================================")
     console.log(req.body)
