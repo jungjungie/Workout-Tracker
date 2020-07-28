@@ -30,7 +30,7 @@ app.get("/exercise", (req, res) => {
 
 // GET route to stats page
 app.get("/stats", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/stats.html"));
+    res.sendFile(path.join(__dirname, "/public/stats.html"));
 })
 
 // API routes
@@ -65,6 +65,17 @@ app.get("/api/workouts", (req, res) => {
                 // console.log(workoutArr)
             }
             res.json(workoutArr);
+        })
+        .catch(err => {
+            res.json(err);
+        })
+})
+
+// GET route to display range of workouts for stats page
+app.get("/api/workouts/range", (req, res) => {
+    db.Workout.find().limit(7).populate("exercises")
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
