@@ -63,7 +63,7 @@ let exerciseSeed = [
   },
   {
     type: "resistance",
-    name: "Military Press",
+    name: "Bench Press",
     duration: 20,
     weight: 300,
     reps: 10,
@@ -71,7 +71,7 @@ let exerciseSeed = [
   },
   {
     type: "resistance",
-    name: "Bench Press",
+    name: "Military Press",
     duration: 20,
     weight: 300,
     reps: 10,
@@ -88,8 +88,7 @@ let exerciseSeed = [
 db.Exercise.deleteMany({})
   .then(() => db.Exercise.collection.insertMany(exerciseSeed))
   .then(data => {
-    console.log(data.result.n + " records inserted!");
-
+    console.log(data)
     let workoutSeed = [
       {
         day: new Date().setDate(new Date().getDate() - 10),
@@ -131,7 +130,7 @@ db.Exercise.deleteMany({})
         day: new Date().setDate(new Date().getDate() - 1),
         exercises: mongoose.Types.ObjectId(data.ops[9]._id)
       }
-    ];
+    ]
 
     db.Workout.deleteMany({})
       .then(() => db.Workout.collection.insertMany(workoutSeed))
@@ -139,13 +138,8 @@ db.Exercise.deleteMany({})
         console.log(data.result.n + " records inserted!");
         process.exit(0);
       })
-      .catch(err => {
-        console.error(err);
-        process.exit(1);
-      });
-
-    process.exit(0);
   })
   .catch(err => {
     console.error(err);
+    process.exit(1);
   });

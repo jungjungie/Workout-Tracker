@@ -38,33 +38,9 @@ app.get("/stats", (req, res) => {
 // GET route to display last workout
 app.get("/api/workouts", (req, res) => {
 
-    db.Workout.find().populate("exercises")
+    db.Workout.find({})
         .then(dbWorkout => {
-            // console.log(dbWorkout)
-            let workoutArr = [];
-
-            // Loops through all exercises in workout and adds up total duration
-            for (let i = 0; i < dbWorkout.length; i++) {
-                let totalDuration = 0;
-
-                for (let j = 0; j < dbWorkout[i].exercises.length; j++) {
-                    totalDuration += dbWorkout[i].exercises[j].duration;
-                }
-
-                // Rebuilds last workout from db as a new object
-                let workoutObj = {
-                    day: dbWorkout[i].day,
-                    exercises: dbWorkout[i].exercises
-                };
-
-                // Adding totalDuration to rebuilt workoutObj
-                workoutObj.totalDuration = totalDuration;
-                workoutArr.push(workoutObj);
-
-                // console.log(totalDuration);
-                // console.log(workoutArr)
-            }
-            res.json(workoutArr);
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
@@ -73,8 +49,11 @@ app.get("/api/workouts", (req, res) => {
 
 // GET route to display range of workouts for stats page
 app.get("/api/workouts/range", (req, res) => {
-    db.Workout.find().limit(7).populate("exercises")
+    db.Workout.find({}).sort({ day: -1 }).limit(7).populate("exercises")
         .then(dbWorkout => {
+            // Sorts days in ascending order for graph display
+            dbWorkout.sort((a, b) => a.day - b.day);
+
             res.json(dbWorkout);
         })
         .catch(err => {
