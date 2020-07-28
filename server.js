@@ -26,12 +26,9 @@ app.get("/exercise", (req, res) => {
     res.sendFile(path.join(__dirname, "public/exercise.html"));
 })
 
-// app.get("/stats", (req, res) => {
-//     res.sendFile(path.join(__dirname, "public/stats.html"));
-// })
-
-
-
+app.get("/stats", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/stats.html"));
+})
 
 // API routes
 // ========================================================
@@ -53,7 +50,8 @@ app.post("/api/workouts", (req, res) => {
     db.Workout.create({ day: Date.now() })
         .then(dbWorkout => {
             console.log(dbWorkout);
-            location.search = "?id=" + workout._id;
+            res.json(dbWorkout);
+            // location.search = "?id=" + workout._id;
         })
         .catch(({ message }) => {
             console.log(message);
