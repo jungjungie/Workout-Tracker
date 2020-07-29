@@ -30,6 +30,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 20;
 }
 
 .nav-title {
@@ -43,6 +44,11 @@ nav {
   font-size: 1.2em;
   padding: 20px;
   line-height: 4;
+}
+
+.nav-title:hover, .nav-items:hover {
+  color: white;
+  text-decoration: none;
 }
 
 .float-left {
@@ -198,7 +204,7 @@ button {
   width: 300px;
   min-height: 80px;
   position: fixed;
-  top: 10px;
+  top: 100px;
   right: -320px;
   opacity: 0;
   transition: all 0.5s;
@@ -207,6 +213,7 @@ button {
 #toast.success {
   opacity: 1;
   right: 10px;
+  /* top: 10px; */
   background-color: hsl(94, 40%, 86%);
   color: hsl(94, 90%, 16%);
   transition: all 1.2s;
@@ -261,7 +268,7 @@ button {
   width: 300px;
   min-height: 80px;
   position: fixed;
-  top: 10px;
+  top: 100px;
   right: -320px;
   opacity: 0;
   transition: all 0.5s;
@@ -322,7 +329,7 @@ button {
   width: 300px;
   min-height: 80px;
   position: fixed;
-  top: 10px;
+  top: 100px;
   right: -320px;
 }
 
@@ -367,7 +374,7 @@ form > button {
   width: 300px;
   min-height: 80px;
   position: fixed;
-  top: 10px;
+  top: 100px;
   right: -320px;
   opacity: 0;
 }
@@ -474,13 +481,22 @@ form > button {
   padding: 10px;
 }
 
+canvas {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 8px #d3d3d3;
+  margin-top: 40px;
+}
+
 @keyframes toast {
   50% {
     opacity: 1;
+    top: 100px;
     right: 10px;
   }
   100% {
     opacity: 0;
+    /* top: -20px; */
     right: -320px;
   }
 }

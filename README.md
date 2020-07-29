@@ -12,15 +12,9 @@
 
 Built with Node, Express, MongoDB and Mongoose, this application allows users to track and view their daily workouts. 
 
-Starter files were provided for the entire front-end code. The following files were built from scratch or modified:
-- Exercise.js
-- Workout.js
-- index.js (models folder)
-- server.js
-- seeds.js (modified)
-- style.css (modified)
+Starter files were provided for the entire front-end code. Refer to the **starter-code** folder to view starter files.
 
-**Deployed Link:** 
+**Deployed Link:** https://em-workout-tracker.herokuapp.com/
 
 ***
 ## Installation
@@ -45,33 +39,29 @@ npm start
 ```
 - Open the app on your localhost:3000/
 
-- Select "New Workout" or "Continue Workout". If you do not have any workouts saved in your database, you will only see an option for "New Workout". 
+- Select "New Workout" or "Continue Workout". If you do not have any workouts saved in your database, you should select "New Workout". 
 
 <p align="center">
-  <img src="assets/images/" alt="" />
+  <img src="public/images/homepage.jpg" alt="screenshot of homepage" />
 </p>
 
 - Select an exercise type and enter information in for the populated fields. 
 
-<p align="center">
-  <img src="assets/images/" alt="" />
-</p>
-
 - You can add multiple exercises in for one workout. If you have other exercises you plan to do, click "Add Exercise" after filling out the form. If you are finished your workout and do not plan to do any more exercises, click "Complete".
 
 <p align="center">
-  <img src="assets/images/" alt="" />
+  <img src="public/images/addexercise.jpg" alt="screenshot of adding an exercise" />
 </p>
 
 - Click on the Dashboard in the navbar to view your weekly workout stats.
 
 <p align="center">
-  <img src="assets/images/" alt="" />
+  <img src="public/images/stats.jpg" alt="screenshot of dashboard displaying stats" />
 </p>
 
 ***
 ## Demo
-![gif demo of app](public/assets/images/demo.gif)
+![gif demo of app](public/images/demo.gif)
 
 ***
 ## Contact
