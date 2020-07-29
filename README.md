@@ -61,7 +61,9 @@ npm start
 
 ***
 ## Demo
-![gif demo of app](public/images/demo.gif)
+<p align="center">
+  <img src="public/images/demo.gif" alt="GIF demo of app" />
+</p>
 
 ***
 ## Contact
