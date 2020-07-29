@@ -6,15 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Montserrat+Alternates&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <title>Fitness Tracker</title>
 </head>
 
 <body>
   <nav>
-    <a href="/">Fitness Tracker</a>
-    <a href="/stats">Dashboard</a>
+    <div class="float-left">
+      <a class="nav-title" href="/">Fitness Tracker</a>
+    </div>
+    <div class="float-right">
+      <a class="nav-items" href="/">Home</a>
+      <a class="nav-items" href="/stats">Dashboard</a>
+    </div>
   </nav>
+  
   <div class="wrapper">
     <header>
       <h1>Fitness Tracker</h1>
@@ -68,10 +75,10 @@
             </div>
           </div>
           <div class="buttons">
-            <button disabled class="huge ui blue button complete">
+            <button disabled id="complete-btn" class="huge ui button complete">
               Complete
             </button>
-            <button disabled class="huge ui positive button add-another">
+            <button disabled id="add-exercise-btn" class="huge ui button add-another">
               Add Exercise
             </button>
           </div>

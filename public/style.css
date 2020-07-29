@@ -14,15 +14,43 @@ body,
 
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url("images/background2.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 
 nav {
-  background-color: #5793fd;
+  background-image: linear-gradient(#e600e6, #d71ad0);
+  border-bottom: 1px solid #d3d3d3;
+  box-shadow: 0px 2px 8px #d3d3d3;
   color: #ffffff;
-  height: 80px;
-  padding: 10px;
-  line-height: 3;
-  font-size: 1.2rem;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.nav-title {
+  font-size: 2em;
+  padding: 20px;
+  line-height: 2.4;
+  font-family: 'Monoton', cursive;
+}
+
+.nav-items {
+  font-size: 1.2em;
+  padding: 20px;
+  line-height: 4;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
 }
 
 a,
@@ -96,8 +124,9 @@ input {
 }
 
 .wrapper {
-  background-color: #f2f8ff;
+  padding-top: 70px;
   padding-bottom: 100px;
+  background: rgba(211, 211, 211, 0.2);
 }
 
 .card.m-auto,
@@ -417,6 +446,26 @@ form > button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+#continue-btn, #complete-btn {
+  background: #8c53ee;
+  line-height: 1.8em;
+  color: white;
+}
+
+#continue-btn:hover, #complete-btn:hover {
+  background: #7632ea;
+}
+
+#new-workout-btn, #add-exercise-btn {
+  background: #42c0ff;
+  line-height: 1.8em;
+  color: white;
+}
+
+#new-workout-btn:hover, #add-exercise-btn:hover {
+  background: #1eb4ff;
 }
 
 .workout-type,

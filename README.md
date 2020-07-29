@@ -18,6 +18,7 @@ Starter files were provided for the entire front-end code. The following files w
 - index.js (models folder)
 - server.js
 - seeds.js (modified)
+- style.css (modified)
 
 **Deployed Link:** 
 
